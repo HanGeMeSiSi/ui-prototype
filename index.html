@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>医疗拍照设备 UI Demo</title>
+  <style>
+    body {
+      background: #181A20;
+      font-family: 'Segoe UI', 'Arial', sans-serif;
+      color: #fff;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      display: flex;
+      height: 100vh;
+      align-items: stretch;
+      position: relative;
+      padding-top: 0;
+    }
+    .device-section {
+      background: #23262F;
+      min-width: 320px;
+      max-width: 400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 24px 0 0 24px;
+      margin: 24px 0 24px 24px;
+      transition: all 0.3s cubic-bezier(.4,0,.2,1);
+      box-shadow: 0 4px 24px 0 rgba(0,0,0,0.12);
+    }
+    .device-model {
+      width: 90%;
+      height: 80%;
+      background: linear-gradient(135deg, #00C1DE 0%, #23262F 100%);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #fff;
+      box-shadow: 0 2px 12px 0 rgba(0,193,222,0.12);
+    }
+    .menu-section {
+      background: #23262F;
+      min-width: 180px;
+      max-width: 220px;
+      margin: 24px 0;
+      border-radius: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      box-shadow: 0 4px 24px 0 rgba(0,0,0,0.08);
+      transition: all 0.3s cubic-bezier(.4,0,.2,1);
+      overflow: auto;
+      max-height: calc(100vh - 48px);
+    }
+    .menu-list {
+      list-style: none;
+      padding: 32px 0 0 0;
+      margin: 0;
+    }
+    .menu-item {
+      padding: 18px 32px;
+      margin: 0 0 8px 0;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      color: #B0B3B8;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .menu-item.active,
+    .menu-item:hover {
+      background: #00C1DE;
+      color: #fff;
+    }
+    /* 9fca4dfa-5012-4c47-970f-c425cee60f3c */
+    .content-section {
+      background: #23262F;
+      flex: 1;
+      margin: 24px 24px 24px 0;
+      border-radius: 0 24px 24px 0;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 4px 24px 0 rgba(0,0,0,0.08);
+      position: relative;
+      transition: all 0.3s cubic-bezier(.4,0,.2,1);
+      overflow: auto;
+      max-height: calc(100vh - 48px);
+    }
+    .user-info {
+      position: absolute;
+      top: 24px;
+      right: 32px;
+      display: flex;
+      align-items: center;
+      z-index: 2;
+      width: 200px;
+    }
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 2px solid #00C1DE;
+      margin-right: 12px;
+    }
+    .username {
+      font-size: 1rem;
+      color: #00C1DE;
+    }
+    .content-card {
+      margin: 80px 40px 40px 40px;
+      background: #181A20;
+      border-radius: 16px;
+      padding: 32px;
+      min-height: 300px;
+      box-shadow: 0 2px 12px 0 rgba(0,193,222,0.08);
+      font-size: 1.2rem;
+    }
+    .toggle-btn {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      background: #23262F;
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px 0 rgba(0,0,0,0.12);
+      cursor: pointer;
+      z-index: 10;
+      transition: background 0.2s;
+    }
+    .toggle-btn:hover {
+      background: #00C1DE;
+    }
+    .arrow {
+      font-size: 2rem;
+      color: #00C1DE;
+      transition: transform 0.3s;
+    }
+    /* 收起状态样式 */
+    .collapsed .menu-section,
+    .collapsed .content-section {
+      display: none;
+    }
+    .collapsed .device-section {
+      max-width: 100vw;
+      flex: 1;
+      margin-right: 24px;
+      border-radius: 24px;
+      justify-content: center;
+      align-items: center;
+    }
+    .collapsed .toggle-btn .arrow {
+      transform: rotate(180deg);
+    }
+    .collapsed .floating-user-info {
+      display: flex !important;
+    }
+    @media (max-width: 900px) {
+      .container {
+        flex-direction: column;
+        padding-top: 0;
+      }
+      .device-section, .menu-section, .content-section {
+        margin: 12px;
+        border-radius: 16px;
+      }
+      .collapsed .device-section {
+        margin: 12px;
+      }
+    }
+    .floating-user-info {
+      position: fixed;
+      top: 32px;
+      left: 48px;
+      z-index: 9999;
+      background: rgba(35,38,47,0.95);
+      box-shadow: 0 2px 12px 0 rgba(0,193,222,0.08);
+      border-radius: 24px;
+      padding: 8px 20px 8px 8px;
+      display: flex;
+      align-items: center;
+      transition: opacity 0.2s;
+    }
+    .profile-menu {
+      display: none;
+      position: absolute;
+      top: 56px;
+      left: 0;
+      min-width: 180px;
+      background: rgba(35,38,47,0.98);
+      border-radius: 16px;
+      box-shadow: 0 8px 32px 0 rgba(0,193,222,0.18);
+      padding: 12px 0 8px 0;
+      z-index: 10000;
+      animation: fadeInMenu 0.25s;
+    }
+    @keyframes fadeInMenu {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .profile-header {
+      display: flex;
+      align-items: center;
+      padding: 8px 20px 8px 16px;
+      border-bottom: 1px solid #23262F;
+      margin-bottom: 8px;
+    }
+    .profile-header .avatar {
+      width: 36px;
+      height: 36px;
+      margin-right: 10px;
+      border: 2px solid #00C1DE;
+    }
+    .profile-name {
+      font-size: 1.05rem;
+      color: #fff;
+      font-weight: 500;
+    }
+    .profile-item {
+      padding: 12px 24px;
+      color: #B0B3B8;
+      font-size: 1rem;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: background 0.18s, color 0.18s;
+      margin: 0 8px;
+    }
+    .profile-item:hover {
+      background: #00C1DE;
+      color: #fff;
+    }
+    .profile-item.logout {
+      color: #ff4d4f;
+      font-weight: 500;
+    }
+    .profile-item.logout:hover {
+      background: #ff4d4f;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="container">
+    <!-- 展开/收起状态切换按钮 -->
+    <div class="toggle-btn" id="toggleBtn">
+      <span class="arrow">&#9654;</span>
+    </div>
+    <!-- 设备模型区 -->
+    <div class="device-section" id="deviceSection">
+      <div class="device-model">设备模型部分</div>
+    </div>
+    <!-- 菜单功能区 -->
+    <div class="menu-section" id="menuSection">
+      <ul class="menu-list">
+        <li class="menu-item active">功能一</li>
+        <li class="menu-item">功能二</li>
+        <li class="menu-item">功能三</li>
+        <li class="menu-item">功能四</li>
+      </ul>
+    </div>
+    <!-- 内容区 -->
+    <div class="content-section" id="contentSection">
+      <div class="content-card">
+        相关的菜单功能内容
+      </div>
+    </div>
+    <!-- 固定在左上角的用户信息 -->
+    <div class="user-info floating-user-info" id="floatingUserInfo">
+      <img src="https://i.pravatar.cc/40" alt="用户头像" class="avatar" id="avatarBtn" style="cursor:pointer;" />
+      <span class="username">已登录</span>
+      <!-- 用户菜单弹窗 -->
+      <div class="profile-menu" id="profileMenu">
+        <div class="profile-header">
+          <img src="https://i.pravatar.cc/40" alt="用户头像" class="avatar" />
+          <div class="profile-name">已登录</div>
+        </div>
+        <div class="profile-item">切换账户</div>
+        <div class="profile-item">账户设置</div>
+        <div class="profile-item logout">退出登录</div>
+      </div>
+    </div>
+  </div>
+  <script>
+    // 展开/收起交互
+    const toggleBtn = document.getElementById('toggleBtn');
+    const container = document.getElementById('container');
+    let collapsed = false;
+    toggleBtn.onclick = function() {
+      collapsed = !collapsed;
+      if (collapsed) {
+        container.classList.add('collapsed');
+      } else {
+        container.classList.remove('collapsed');
+      }
+    };
+    // 菜单切换高亮
+    document.querySelectorAll('.menu-item').forEach(item => {
+      item.onclick = function() {
+        document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
+        this.classList.add('active');
+        document.querySelector('.content-card').innerText = this.innerText + ' 的内容展示';
+      };
+    });
+    // 头像点击弹出菜单
+    const avatarBtn = document.getElementById('avatarBtn');
+    const profileMenu = document.getElementById('profileMenu');
+    let menuOpen = false;
+    avatarBtn.onclick = function(e) {
+      e.stopPropagation();
+      menuOpen = !menuOpen;
+      profileMenu.style.display = menuOpen ? 'block' : 'none';
+    };
+    // 点击菜单外关闭
+    document.addEventListener('click', function(e) {
+      if (menuOpen && !profileMenu.contains(e.target) && e.target !== avatarBtn) {
+        profileMenu.style.display = 'none';
+        menuOpen = false;
+      }
+    });
+  </script>
+</body>
+</html> 
