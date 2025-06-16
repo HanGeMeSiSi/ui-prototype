@@ -6,200 +6,172 @@
   <title>医疗拍照设备 UI Demo</title>
   <style>
     body {
-      background: #181A20;
+      background: #F5F7FA; /* Lighter background */
       font-family: 'Segoe UI', 'Arial', sans-serif;
-      color: #fff;
+      color: #333; /* Darker text for contrast */
       margin: 0;
       padding: 0;
+      overflow: hidden; /* Prevent body scroll */
     }
     .container {
       display: flex;
       height: 100vh;
       align-items: stretch;
-      position: relative;
-      padding-top: 0;
+      padding: 24px; /* Padding around the entire app */
+      box-sizing: border-box; /* Include padding in height */
+      gap: 24px; /* Gap between columns */
+      position: relative; /* For absolute positioning of toggle button */
     }
-    .device-section {
-      background: #23262F;
-      min-width: 320px;
-      max-width: 400px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 24px 0 0 24px;
-      margin: 24px 0 24px 24px;
-      transition: all 0.3s cubic-bezier(.4,0,.2,1);
-      box-shadow: 0 4px 24px 0 rgba(0,0,0,0.12);
-    }
-    .device-model {
-      width: 90%;
-      height: 80%;
-      background: linear-gradient(135deg, #00C1DE 0%, #23262F 100%);
-      border-radius: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.3rem;
-      font-weight: 600;
-      color: #fff;
-      box-shadow: 0 2px 12px 0 rgba(0,193,222,0.12);
-    }
-    .menu-section {
-      background: #23262F;
-      min-width: 180px;
-      max-width: 220px;
-      margin: 24px 0;
-      border-radius: 0;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
+    .section-base {
+      background: #FFFFFF; /* White background for sections */
+      border-radius: 24px;
       box-shadow: 0 4px 24px 0 rgba(0,0,0,0.08);
       transition: all 0.3s cubic-bezier(.4,0,.2,1);
-      overflow: auto;
-      max-height: calc(100vh - 48px);
+      overflow: hidden; /* Hide overflow content within sections */
+      display: flex; /* Flex children inside sections */
+      flex-direction: column;
+    }
+    .device-section {
+      flex-shrink: 0;
+      width: 320px; /* Fixed width for the device section */
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #2196F3 0%, #0D47A1 100%); /* Blue gradient */
+      box-shadow: 0 4px 24px 0 rgba(33,150,243,0.2);
+      color: #fff;
+    }
+    .device-model {
+      width: 80%;
+      height: 60%;
+      background: rgba(255,255,255,0.15); /* Semi-transparent white */
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column; /* To stack text */
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #fff;
+      border: 2px solid rgba(255,255,255,0.3);
+      backdrop-filter: blur(5px);
+      box-shadow: 0 8px 32px 0 rgba(33,150,243,0.3);
+      text-align: center;
+      line-height: 1.4;
+    }
+    .menu-section {
+      flex-shrink: 0;
+      width: 220px; /* Fixed width for menu section */
+      padding-top: 32px;
     }
     .menu-list {
       list-style: none;
-      padding: 32px 0 0 0;
+      padding: 0;
       margin: 0;
     }
     .menu-item {
-      padding: 18px 32px;
-      margin: 0 0 8px 0;
+      padding: 18px 24px;
+      margin: 0 16px 8px 16px; /* Margin for rounded corners */
       border-radius: 12px;
       font-size: 1.1rem;
-      color: #B0B3B8;
+      color: #666;
       cursor: pointer;
-      transition: background 0.2s, color 0.2s;
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 500;
     }
-    .menu-item.active,
     .menu-item:hover {
-      background: #00C1DE;
+      background: #E3F2FD; /* Light blue on hover */
+      color: #2196F3;
+      box-shadow: 0 2px 8px rgba(33,150,243,0.1);
+    }
+    .menu-item.active {
+      background: #2196F3; /* Active blue */
+      color: #fff;
+      box-shadow: 0 4px 16px rgba(33,150,243,0.2);
+    }
+    .menu-item.active:hover {
+      background: #1976D2; /* Slightly darker blue on active hover */
       color: #fff;
     }
-    /* 9fca4dfa-5012-4c47-970f-c425cee60f3c */
-    .content-section {
-      background: #23262F;
-      flex: 1;
-      margin: 24px 24px 24px 0;
-      border-radius: 0 24px 24px 0;
-      display: flex;
-      flex-direction: column;
-      box-shadow: 0 4px 24px 0 rgba(0,0,0,0.08);
-      position: relative;
-      transition: all 0.3s cubic-bezier(.4,0,.2,1);
-      overflow: auto;
-      max-height: calc(100vh - 48px);
-    }
-    .user-info {
-      position: absolute;
-      top: 24px;
-      right: 32px;
-      display: flex;
-      align-items: center;
-      z-index: 2;
-      width: 200px;
-    }
-    .avatar {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      border: 2px solid #00C1DE;
-      margin-right: 12px;
-    }
-    .username {
-      font-size: 1rem;
-      color: #00C1DE;
-    }
-    .content-card {
-      margin: 80px 40px 40px 40px;
-      background: #181A20;
-      border-radius: 16px;
-      padding: 32px;
-      min-height: 300px;
-      box-shadow: 0 2px 12px 0 rgba(0,193,222,0.08);
+    .menu-item i {
       font-size: 1.2rem;
     }
-    .toggle-btn {
-      position: absolute;
-      left: 0;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      background: #23262F;
-      border-radius: 50%;
-      width: 48px;
-      height: 48px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 2px 8px 0 rgba(0,0,0,0.12);
-      cursor: pointer;
-      z-index: 10;
-      transition: background 0.2s;
+    .content-section {
+      flex-grow: 1; /* Takes remaining space */
+      position: relative;
+      padding: 32px; /* Inner padding for content */
     }
-    .toggle-btn:hover {
-      background: #00C1DE;
-    }
-    .arrow {
-      font-size: 2rem;
-      color: #00C1DE;
-      transition: transform 0.3s;
-    }
-    /* 收起状态样式 */
-    .collapsed .menu-section,
-    .collapsed .content-section {
-      display: none;
-    }
-    .collapsed .device-section {
-      max-width: 100vw;
-      flex: 1;
-      margin-right: 24px;
-      border-radius: 24px;
-      justify-content: center;
-      align-items: center;
-    }
-    .collapsed .toggle-btn .arrow {
-      transform: rotate(180deg);
-    }
-    .collapsed .floating-user-info {
-      display: flex !important;
-    }
-    @media (max-width: 900px) {
-      .container {
-        flex-direction: column;
-        padding-top: 0;
-      }
-      .device-section, .menu-section, .content-section {
-        margin: 12px;
-        border-radius: 16px;
-      }
-      .collapsed .device-section {
-        margin: 12px;
-      }
-    }
-    .floating-user-info {
-      position: fixed;
+    /* Fixed User Info (top-left) */
+    .user-info-fixed {
+      position: fixed; /* Always in view */
       top: 32px;
-      left: 48px;
-      z-index: 9999;
-      background: rgba(35,38,47,0.95);
-      box-shadow: 0 2px 12px 0 rgba(0,193,222,0.08);
-      border-radius: 24px;
-      padding: 8px 20px 8px 8px;
+      left: 32px;
       display: flex;
       align-items: center;
-      transition: opacity 0.2s;
+      z-index: 9999;
+      background: #FFFFFF;
+      backdrop-filter: blur(5px);
+      border-radius: 28px;
+      padding: 6px 16px 6px 6px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      cursor: pointer;
+      transition: all 0.2s;
     }
+    .user-info-fixed:hover {
+      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    }
+    .user-info-fixed .avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 3px solid #2196F3;
+      margin-right: 12px;
+    }
+    .user-info-fixed .username {
+      font-size: 1.05rem;
+      color: #2196F3;
+      font-weight: 600;
+    }
+    /* Content Area */
+    .content-area {
+      /* No margin-top needed here as user-info is fixed */
+      padding-top: 0; /* Already part of content-section padding */
+      flex-grow: 1;
+      overflow-y: auto;
+      color: #333;
+    }
+    .content-card {
+      background: #F8F9FA;
+      border-radius: 16px;
+      padding: 32px;
+      min-height: 200px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 24px;
+      color: #555;
+    }
+    .content-card h2 {
+      color: #2196F3;
+      margin-top: 0;
+      margin-bottom: 20px;
+      font-size: 1.8rem;
+      border-bottom: 1px solid #E0E0E0;
+      padding-bottom: 10px;
+    }
+    /* Profile Menu positioning relative to fixed user-info */
     .profile-menu {
       display: none;
       position: absolute;
-      top: 56px;
+      top: calc(100% + 10px); /* Position below the user-info-fixed div */
       left: 0;
-      min-width: 180px;
-      background: rgba(35,38,47,0.98);
+      min-width: 200px;
+      background: #FFFFFF;
       border-radius: 16px;
-      box-shadow: 0 8px 32px 0 rgba(0,193,222,0.18);
-      padding: 12px 0 8px 0;
+      box-shadow: 0 8px 32px 0 rgba(0,0,0,0.18);
+      padding: 12px 0;
       z-index: 10000;
       animation: fadeInMenu 0.25s;
     }
@@ -211,23 +183,23 @@
       display: flex;
       align-items: center;
       padding: 8px 20px 8px 16px;
-      border-bottom: 1px solid #23262F;
+      border-bottom: 1px solid #EEEEEE;
       margin-bottom: 8px;
     }
     .profile-header .avatar {
       width: 36px;
       height: 36px;
       margin-right: 10px;
-      border: 2px solid #00C1DE;
+      border: 2px solid #2196F3;
     }
     .profile-name {
       font-size: 1.05rem;
-      color: #fff;
+      color: #333;
       font-weight: 500;
     }
     .profile-item {
       padding: 12px 24px;
-      color: #B0B3B8;
+      color: #555;
       font-size: 1rem;
       cursor: pointer;
       border-radius: 8px;
@@ -235,18 +207,483 @@
       margin: 0 8px;
     }
     .profile-item:hover {
-      background: #00C1DE;
-      color: #fff;
+      background: #E3F2FD;
+      color: #2196F3;
     }
     .profile-item.logout {
-      color: #ff4d4f;
+      color: #EF5350;
       font-weight: 500;
     }
     .profile-item.logout:hover {
-      background: #ff4d4f;
+      background: #EF5350;
       color: #fff;
     }
+    /* Toggle Button Styles */
+    .toggle-btn {
+      position: absolute; /* Relative to container */
+      left: 0;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      background: #FFFFFF; /* White button */
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px 0 rgba(0,0,0,0.1);
+      cursor: pointer;
+      z-index: 100;
+      transition: background 0.2s, transform 0.3s;
+    }
+    .toggle-btn:hover {
+      background: #E3F2FD;
+      transform: translate(-50%, -50%) scale(1.05);
+    }
+    .arrow {
+      font-size: 2rem;
+      color: #2196F3;
+      transition: transform 0.3s;
+    }
+    /* Collapsed state styles */
+    .container.collapsed {
+        gap: 0; /* Remove gap when collapsed */
+    }
+    .container.collapsed .menu-section,
+    .container.collapsed .content-section {
+      display: none;
+    }
+    .container.collapsed .device-section {
+      flex: 1; /* Take all available horizontal space */
+      width: auto; /* Override fixed width */
+      border-radius: 24px; /* Ensure full rounded corners */
+      margin: 0; /* Remove any lingering margins */
+    }
+    .container.collapsed .toggle-btn .arrow {
+      transform: rotate(180deg);
+    }
+    /* Sub-page specific styles */
+    .content-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #E0E0E0;
+    }
+    .content-header h2 {
+      margin: 0;
+      border-bottom: none; /* Override parent style */
+      padding-bottom: 0;
+    }
+    .action-buttons {
+        display: flex;
+        gap: 10px;
+    }
+    .action-buttons button {
+      background: #2196F3;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background 0.2s, box-shadow 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .action-buttons button:hover {
+      background: #1976D2;
+      box-shadow: 0 2px 8px rgba(33,150,243,0.2);
+    }
+    .input-group {
+      margin-bottom: 15px;
+    }
+    .input-group label {
+      display: block;
+      margin-bottom: 5px;
+      color: #666;
+      font-weight: 500;
+    }
+    .input-group input[type="text"],
+    .input-group input[type="date"] {
+      width: calc(100% - 22px); /* Adjust for padding and border */
+      padding: 10px;
+      border: 1px solid #E0E0E0;
+      border-radius: 8px;
+      font-size: 1rem;
+      color: #333;
+      background: #fff;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .input-group input[type="text"]:focus,
+    .input-group input[type="date"]:focus {
+      border-color: #2196F3;
+      box-shadow: 0 0 0 3px rgba(33,150,243,0.2);
+      outline: none;
+    }
+    .customer-list {
+      margin-top: 20px;
+      border-top: 1px solid #E0E0E0;
+      padding-top: 20px;
+    }
+    .customer-item {
+      background: #FFFFFF;
+      border: 1px solid #E0E0E0;
+      border-radius: 12px;
+      padding: 15px 20px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.03);
+      transition: all 0.2s;
+    }
+    .customer-item:hover {
+      box-shadow: 0 2px 10px rgba(33,150,243,0.1);
+      border-color: #90CAF9;
+    }
+    .customer-item span {
+      font-weight: 500;
+      color: #333;
+    }
+    .customer-actions button {
+      background: none;
+      border: none;
+      color: #2196F3;
+      cursor: pointer;
+      font-size: 0.95rem;
+      margin-left: 10px;
+      padding: 5px 10px;
+      border-radius: 6px;
+      transition: background 0.2s, color 0.2s;
+    }
+    .customer-actions button:hover {
+      background: #E3F2FD;
+    }
+    .tab-nav {
+      display: flex;
+      margin-bottom: 20px;
+      border-bottom: 1px solid #E0E0E0;
+    }
+    .tab-nav-item {
+      padding: 12px 20px;
+      cursor: pointer;
+      color: #666;
+      font-weight: 500;
+      border-bottom: 3px solid transparent;
+      transition: all 0.2s;
+    }
+    .tab-nav-item.active {
+      color: #2196F3;
+      border-color: #2196F3;
+    }
+    .template-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+    .template-item {
+      background: #FFFFFF;
+      border-radius: 12px;
+      padding: 15px;
+      text-align: center;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      transition: all 0.2s;
+      border: 2px solid transparent;
+    }
+    .template-item:hover {
+      border-color: #90CAF9;
+      box-shadow: 0 4px 12px rgba(33,150,243,0.1);
+    }
+    .template-item.selected {
+      border-color: #2196F3;
+      background: #E3F2FD;
+      box-shadow: 0 4px 16px rgba(33,150,243,0.2);
+    }
+    .template-item i {
+      font-size: 3rem;
+      color: #B0B3B8;
+      margin-bottom: 10px;
+    }
+    .template-item.selected i {
+      color: #2196F3;
+    }
+    .template-item span {
+      display: block;
+      font-weight: 500;
+      color: #333;
+    }
+    .template-item.selected span {
+      color: #2196F3;
+    }
+    .image-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+    .image-gallery-item {
+      background: #FFFFFF;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      position: relative;
+      padding-bottom: 100%; /* For aspect ratio */
+    }
+    .image-gallery-item img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .camera-preview {
+      width: 100%;
+      height: 300px;
+      background: #ddd;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #666;
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      overflow: hidden;
+      position: relative;
+    }
+    .camera-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain; /* Ensure image fits */
+    }
+    .overlay-grid {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+      border: 1px solid rgba(255,255,255,0.5); /* White grid lines */
+      box-sizing: border-box;
+    }
+    .overlay-grid div {
+      border: 1px solid rgba(255,255,255,0.2);
+      box-sizing: border-box;
+    }
+    .control-buttons {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      margin-top: 20px;
+    }
+    .control-buttons button {
+      background: #FFFFFF;
+      color: #2196F3;
+      border: 1px solid #2196F3;
+      padding: 12px 25px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 1.05rem;
+      font-weight: 600;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    .control-buttons button:hover {
+      background: #2196F3;
+      color: #fff;
+      box-shadow: 0 4px 16px rgba(33,150,243,0.2);
+    }
+    .control-buttons button.danger {
+      background: #EF5350;
+      border-color: #EF5350;
+      color: #fff;
+    }
+    .control-buttons button.danger:hover {
+      background: #D32F2F;
+      box-shadow: 0 4px 16px rgba(239,83,80,0.2);
+    }
+    .comparison-area {
+      display: flex;
+      gap: 20px;
+      margin-top: 20px;
+      justify-content: center;
+    }
+    .comparison-pane {
+      flex: 1;
+      background: #FFFFFF;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      text-align: center;
+    }
+    .comparison-pane img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #E0E0E0;
+    }
+    .comparison-pane h3 {
+      color: #2196F3;
+      margin-top: 0;
+      margin-bottom: 15px;
+      font-size: 1.4rem;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    .stat-card {
+      background: #FFFFFF;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    .stat-card h3 {
+      color: #2196F3;
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+    .stat-card p {
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: #333;
+    }
+    .settings-group {
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #E0E0E0;
+    }
+    .settings-group:last-child {
+      border-bottom: none;
+    }
+    .settings-group h3 {
+      color: #2196F3;
+      margin-top: 0;
+      margin-bottom: 15px;
+      font-size: 1.4rem;
+    }
+    .setting-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid #F0F0F0;
+    }
+    .setting-item:last-child {
+      border-bottom: none;
+    }
+    .setting-item label {
+      color: #555;
+      font-weight: 500;
+    }
+    .setting-item input[type="checkbox"] {
+      transform: scale(1.2);
+      accent-color: #2196F3;
+    }
+    /* Media queries for responsiveness */
+    @media (max-width: 1200px) {
+      .container {
+        gap: 16px;
+        padding: 16px;
+      }
+      .device-section {
+        width: 280px;
+      }
+      .menu-section {
+        width: 180px;
+      }
+      .menu-item {
+        padding: 14px 18px;
+        font-size: 1rem;
+      }
+      .user-info-fixed {
+        top: 24px;
+        left: 24px;
+      }
+    }
+    @media (max-width: 900px) {
+      .container {
+        flex-direction: column;
+        padding: 12px;
+        height: auto;
+      }
+      .section-base {
+        margin-bottom: 12px;
+        height: auto;
+      }
+      .device-section, .menu-section, .content-section {
+        width: auto;
+        flex-basis: auto;
+        min-height: unset;
+        max-height: unset;
+        border-radius: 16px;
+      }
+      .device-section {
+        height: 250px;
+        flex-shrink: 0;
+      }
+      .menu-section {
+        padding-top: 16px;
+      }
+      .menu-list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding-bottom: 16px;
+      }
+      .menu-item {
+        margin: 6px;
+        padding: 10px 18px;
+        font-size: 0.95rem;
+      }
+      .content-section {
+        padding: 24px;
+      }
+      .user-info-fixed {
+        position: static;
+        margin: 0 auto 16px auto;
+        width: fit-content;
+        border-radius: 12px;
+      }
+      .container.collapsed .device-section {
+        width: auto;
+        flex-basis: auto;
+        margin: 0;
+      }
+      .container.collapsed .user-info-fixed {
+        display: flex;
+      }
+      /* Mobile specific adjustments for sub-pages */
+      .template-grid {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      }
+      .image-gallery {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      }
+      .control-buttons {
+        flex-direction: column;
+      }
+      .control-buttons button {
+        width: 100%;
+        margin-left: 0;
+        margin-bottom: 10px;
+      }
+      .comparison-area {
+        flex-direction: column;
+      }
+    }
   </style>
+  <!-- Google Fonts - Material Icons for icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
   <div class="container" id="container">
@@ -254,46 +691,325 @@
     <div class="toggle-btn" id="toggleBtn">
       <span class="arrow">&#9654;</span>
     </div>
-    <!-- 设备模型区 -->
-    <div class="device-section" id="deviceSection">
-      <div class="device-model">设备模型部分</div>
-    </div>
-    <!-- 菜单功能区 -->
-    <div class="menu-section" id="menuSection">
-      <ul class="menu-list">
-        <li class="menu-item active">功能一</li>
-        <li class="menu-item">功能二</li>
-        <li class="menu-item">功能三</li>
-        <li class="menu-item">功能四</li>
-      </ul>
-    </div>
-    <!-- 内容区 -->
-    <div class="content-section" id="contentSection">
-      <div class="content-card">
-        相关的菜单功能内容
-      </div>
-    </div>
+
     <!-- 固定在左上角的用户信息 -->
-    <div class="user-info floating-user-info" id="floatingUserInfo">
-      <img src="https://i.pravatar.cc/40" alt="用户头像" class="avatar" id="avatarBtn" style="cursor:pointer;" />
-      <span class="username">已登录</span>
+    <div class="user-info-fixed" id="userInfoFixed">
+      <img src="https://i.pravatar.cc/44" alt="用户头像" class="avatar" id="avatarBtn" />
+      <span class="username">演示用户</span>
       <!-- 用户菜单弹窗 -->
       <div class="profile-menu" id="profileMenu">
         <div class="profile-header">
-          <img src="https://i.pravatar.cc/40" alt="用户头像" class="avatar" />
-          <div class="profile-name">已登录</div>
+          <img src="https://i.pravatar.cc/36" alt="用户头像" class="avatar" />
+          <div class="profile-name">演示用户</div>
         </div>
         <div class="profile-item">切换账户</div>
         <div class="profile-item">账户设置</div>
         <div class="profile-item logout">退出登录</div>
       </div>
     </div>
+
+    <!-- 设备模型区 -->
+    <div class="device-section section-base" id="deviceSection">
+      <div class="device-model">
+        医疗拍照设备
+        <br/>(模拟模型)
+      </div>
+    </div>
+    <!-- 菜单功能区 -->
+    <div class="menu-section section-base" id="menuSection">
+      <ul class="menu-list">
+        <li class="menu-item active" data-content="customer">
+          <i class="material-icons">people</i>客户档案
+        </li>
+        <li class="menu-item" data-content="capture">
+          <i class="material-icons">camera_alt</i>拍照采集
+        </li>
+        <li class="menu-item" data-content="calibrate">
+          <i class="material-icons">straighten</i>校准对齐
+        </li>
+        <li class="menu-item" data-content="compare">
+          <i class="material-icons">compare</i>对比查看
+        </li>
+        <li class="menu-item" data-content="stats">
+          <i class="material-icons">bar_chart</i>数据统计
+        </li>
+        <li class="menu-item" data-content="settings">
+          <i class="material-icons">settings</i>系统设置
+        </li>
+      </ul>
+    </div>
+    <!-- 内容区 -->
+    <div class="content-section section-base" id="contentSection">
+      <div class="content-area" id="contentArea">
+        <!-- 客户档案管理 -->
+        <div class="content-card" id="customerContent">
+          <div class="content-header">
+            <h2>客户档案管理</h2>
+            <div class="action-buttons">
+              <button><i class="material-icons">person_add</i>新建客户</button>
+              <button><i class="material-icons">assignment</i>已有客户</button>
+            </div>
+          </div>
+          <div class="input-group">
+            <label for="customerSearch">搜索客户姓名/病历号:</label>
+            <input type="text" id="customerSearch" placeholder="请输入姓名或病历号">
+          </div>
+          <div class="customer-list">
+            <div class="customer-item">
+              <span>姓名: 模特01 | 性别: 女 | 生日: 2023-04-26</span>
+              <div class="customer-actions">
+                <button>查看</button>
+                <button>编辑</button>
+              </div>
+            </div>
+            <div class="customer-item">
+              <span>姓名: 张三 | 性别: 男 | 生日: 1990-01-15</span>
+              <div class="customer-actions">
+                <button>查看</button>
+                <button>编辑</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 拍照采集 -->
+        <div class="content-card" id="captureContent" style="display:none;">
+          <div class="content-header">
+            <h2>拍照采集</h2>
+            <div class="action-buttons">
+                <button><i class="material-icons">add_photo_alternate</i>更换模板背景</button>
+                <button><i class="material-icons">water_drop</i>关闭模板水印</button>
+            </div>
+          </div>
+
+          <h3>拍摄类型:</h3>
+          <div class="tab-nav">
+            <div class="tab-nav-item active">面部</div>
+            <div class="tab-nav-item">身体</div>
+            <div class="tab-nav-item">项目</div>
+          </div>
+
+          <h3>拍摄模板:</h3>
+          <div class="template-grid">
+            <div class="template-item selected">
+              <i class="material-icons">face</i>
+              <span>脸正前</span>
+            </div>
+            <div class="template-item">
+              <i class="material-icons">face</i>
+              <span>脸左45</span>
+            </div>
+            <div class="template-item">
+              <i class="material-icons">face</i>
+              <span>脸右45</span>
+            </div>
+            <div class="template-item">
+              <i class="material-icons">face</i>
+              <span>脸左90</span>
+            </div>
+            <div class="template-item">
+              <i class="material-icons">face</i>
+              <span>脸右90</span>
+            </div>
+            <div class="template-item">
+              <i class="material-icons">nose_tip</i>
+              <span>鼻部</span>
+            </div>
+            <div class="template-item">
+              <i class="material-icons">ear_buds</i>
+              <span>耳部</span>
+            </div>
+          </div>
+
+          <h3 style="margin-top: 30px;">拍摄预览:</h3>
+          <div class="image-gallery">
+            <div class="image-gallery-item">
+              <img src="https://i.pravatar.cc/150?img=1" alt="Placeholder Image">
+            </div>
+            <div class="image-gallery-item">
+              <img src="https://i.pravatar.cc/150?img=2" alt="Placeholder Image">
+            </div>
+            <div class="image-gallery-item">
+              <img src="https://i.pravatar.cc/150?img=3" alt="Placeholder Image">
+            </div>
+            <div class="image-gallery-item">
+              <div style="background:#E0E0E0; width:100%; height:100%; display:flex; align-items:center; justify-content:center;">
+                <i class="material-icons" style="font-size:3rem; color:#B0B3B8;">camera_alt</i>
+              </div>
+            </div>
+            <div class="image-gallery-item">
+              <div style="background:#E0E0E0; width:100%; height:100%; display:flex; align-items:center; justify-content:center;">
+                <i class="material-icons" style="font-size:3rem; color:#B0B3B8;">camera_alt</i>
+              </div>
+            </div>
+          </div>
+
+          <div class="control-buttons" style="margin-top: 30px;">
+            <button><i class="material-icons">play_arrow</i>开始校准</button>
+            <button><i class="material-icons">camera</i>一键拍摄</button>
+          </div>
+        </div>
+
+        <!-- 校准对齐 -->
+        <div class="content-card" id="calibrateContent" style="display:none;">
+          <div class="content-header">
+            <h2>校准对齐</h2>
+          </div>
+
+          <h3>辅助线设置:</h3>
+          <div class="tab-nav">
+            <div class="tab-nav-item active">正视图</div>
+            <div class="tab-nav-item">九宫格</div>
+            <div class="tab-nav-item">三庭五眼</div>
+          </div>
+
+          <div class="camera-preview">
+            <!-- 模拟实时预览 -->
+            <img src="https://i.pravatar.cc/400?img=4" alt="Live Preview" />
+            <div class="overlay-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+          </div>
+
+          <h3>升降控制:</h3>
+          <div class="control-buttons">
+            <button><i class="material-icons">arrow_upward</i>上升</button>
+            <button><i class="material-icons">pause</i>暂停</button>
+            <button><i class="material-icons">arrow_downward</i>下降</button>
+          </div>
+
+          <h3 style="margin-top: 30px;">其他:</h3>
+          <div class="control-buttons">
+            <button class="danger"><i class="material-icons">flash_on</i>重置曝光灯</button>
+            <button><i class="material-icons">camera_enhance</i>恢复曝光度</button>
+            <button><i class="material-icons">save</i>保存曝光度</button>
+          </div>
+        </div>
+
+        <!-- 对比查看 -->
+        <div class="content-card" id="compareContent" style="display:none;">
+          <div class="content-header">
+            <h2>对比查看</h2>
+            <div class="action-buttons">
+              <button><i class="material-icons">add</i>添加术后档案</button>
+            </div>
+          </div>
+
+          <div class="comparison-area">
+            <div class="comparison-pane">
+              <h3>术前档案</h3>
+              <img src="https://i.pravatar.cc/300?img=5" alt="Before Image" />
+              <p>拍摄日期: 2023-04-26</p>
+              <p>部位: 面部</p>
+            </div>
+            <div class="comparison-pane">
+              <h3>术后档案</h3>
+              <img src="https://i.pravatar.cc/300?img=6" alt="After Image" />
+              <p>拍摄日期: 2024-01-10</p>
+              <p>部位: 面部</p>
+            </div>
+          </div>
+          <div style="text-align: center; margin-top: 20px;">
+            <button class="action-buttons" style="background:#4CAF50; color:#fff;"><i class="material-icons">difference</i>查看对比报告</button>
+          </div>
+        </div>
+
+        <!-- 数据统计 -->
+        <div class="content-card" id="statsContent" style="display:none;">
+          <div class="content-header">
+            <h2>数据统计</h2>
+          </div>
+          <div class="stats-grid">
+            <div class="stat-card">
+              <h3>总客户数</h3>
+              <p>250</p>
+            </div>
+            <div class="stat-card">
+              <h3>今日拍照量</h3>
+              <p>15</p>
+            </div>
+            <div class="stat-card">
+              <h3>本月新增档案</h3>
+              <p>42</p>
+            </div>
+            <div class="stat-card">
+              <h3>热门项目</h3>
+              <p>面部提升 (60%)</p>
+            </div>
+          </div>
+          <p style="margin-top: 30px; text-align: center; color: #888;">图表和更详细的数据将在此处展示。</p>
+        </div>
+
+        <!-- 系统设置 -->
+        <div class="content-card" id="settingsContent" style="display:none;">
+          <div class="content-header">
+            <h2>系统设置</h2>
+          </div>
+
+          <div class="settings-group">
+            <h3>设备连接</h3>
+            <div class="setting-item">
+              <label for="deviceStatus">设备状态:</label>
+              <span>已连接</span>
+            </div>
+            <div class="setting-item">
+              <label for="autoConnect">自动连接设备:</label>
+              <input type="checkbox" id="autoConnect" checked>
+            </div>
+          </div>
+
+          <div class="settings-group">
+            <h3>账户与权限</h3>
+            <div class="setting-item">
+              <label for="currentRole">当前角色:</label>
+              <span>管理员</span>
+            </div>
+            <div class="setting-item">
+              <label for="manageUsers">管理用户:</label>
+              <button style="background:#fff; color:#2196F3; border:1px solid #2196F3;">前往管理</button>
+            </div>
+          </div>
+
+          <div class="settings-group">
+            <h3>其他设置</h3>
+            <div class="setting-item">
+              <label for="language">语言:</label>
+              <span>简体中文</span>
+            </div>
+            <div class="setting-item">
+              <label for="appVersion">版本:</label>
+              <span>V1.2.0</span>
+            </div>
+          </div>
+          <div class="control-buttons" style="justify-content: flex-end;">
+            <button style="background:#607D8B; color:#fff;"><i class="material-icons">save</i>保存设置</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
   <script>
+    // 菜单切换高亮和内容显示
+    const menuItems = document.querySelectorAll('.menu-item');
+    const contentArea = document.getElementById('contentArea');
+    const contentCards = contentArea.querySelectorAll('.content-card');
+
+    menuItems.forEach(item => {
+      item.onclick = function() {
+        menuItems.forEach(i => i.classList.remove('active'));
+        this.classList.add('active');
+        contentCards.forEach(card => card.style.display = 'none');
+        const targetContentId = this.dataset.content + 'Content';
+        const targetContent = document.getElementById(targetContentId);
+        if (targetContent) {
+          targetContent.style.display = 'block';
+        }
+      };
+    });
+
     // 展开/收起交互
     const toggleBtn = document.getElementById('toggleBtn');
     const container = document.getElementById('container');
     let collapsed = false;
+
     toggleBtn.onclick = function() {
       collapsed = !collapsed;
       if (collapsed) {
@@ -302,30 +1018,59 @@
         container.classList.remove('collapsed');
       }
     };
-    // 菜单切换高亮
-    document.querySelectorAll('.menu-item').forEach(item => {
-      item.onclick = function() {
-        document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
-        this.classList.add('active');
-        document.querySelector('.content-card').innerText = this.innerText + ' 的内容展示';
-      };
-    });
+
     // 头像点击弹出菜单
     const avatarBtn = document.getElementById('avatarBtn');
     const profileMenu = document.getElementById('profileMenu');
+    const userInfoFixed = document.getElementById('userInfoFixed');
     let menuOpen = false;
+
     avatarBtn.onclick = function(e) {
       e.stopPropagation();
       menuOpen = !menuOpen;
       profileMenu.style.display = menuOpen ? 'block' : 'none';
     };
+
     // 点击菜单外关闭
     document.addEventListener('click', function(e) {
-      if (menuOpen && !profileMenu.contains(e.target) && e.target !== avatarBtn) {
+      if (menuOpen && !userInfoFixed.contains(e.target)) {
         profileMenu.style.display = 'none';
         menuOpen = false;
       }
     });
+
+    // Initial load: ensure the first content card is visible
+    document.addEventListener('DOMContentLoaded', () => {
+      const activeMenuItem = document.querySelector('.menu-item.active');
+      if (activeMenuItem) {
+        const targetContentId = activeMenuItem.dataset.content + 'Content';
+        const targetContent = document.getElementById(targetContentId);
+        if (targetContent) {
+          targetContent.style.display = 'block';
+        }
+      }
+    });
+
+    // Optional: Add interaction for tabs within content cards (e.g., in Capture or Calibrate)
+    document.querySelectorAll('.tab-nav-item').forEach(tab => {
+      tab.onclick = function() {
+        this.closest('.tab-nav').querySelectorAll('.tab-nav-item').forEach(item => item.classList.remove('active'));
+        this.classList.add('active');
+        // Here you would add logic to switch content below the tabs if needed.
+        // For this prototype, we are just changing the active tab style.
+        console.log('Tab clicked:', this.innerText);
+      };
+    });
+
+    // Optional: Add interaction for template items
+    document.querySelectorAll('.template-item').forEach(template => {
+      template.onclick = function() {
+        this.closest('.template-grid').querySelectorAll('.template-item').forEach(item => item.classList.remove('selected'));
+        this.classList.add('selected');
+        console.log('Template selected:', this.querySelector('span').innerText);
+      };
+    });
+
   </script>
 </body>
 </html> 
