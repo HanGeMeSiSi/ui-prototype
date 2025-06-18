@@ -681,6 +681,134 @@
         flex-direction: column;
       }
     }
+    /* Tesla风格表单区块 */
+    .tesla-section {
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 2px 12px rgba(33,150,243,0.06);
+      padding: 24px 28px 18px 28px;
+      margin-bottom: 24px;
+    }
+    .tesla-section h3 {
+      margin-top: 0;
+      font-size: 1.2rem;
+      color: #1976D2;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .required-tip { color: #EF5350; font-size: 0.95em; }
+    .optional-tip { color: #888; font-size: 0.95em; }
+    .tesla-form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px 24px;
+    }
+    .tesla-form-group label {
+      color: #666;
+      font-weight: 500;
+      margin-bottom: 6px;
+      display: block;
+    }
+    .tesla-form-group input,
+    .tesla-form-group select {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1.5px solid #E3F2FD;
+      border-radius: 8px;
+      font-size: 1rem;
+      background: #F8FAFB;
+      transition: border-color 0.2s;
+    }
+    .tesla-form-group input:focus,
+    .tesla-form-group select:focus {
+      border-color: #2196F3;
+      outline: none;
+    }
+    .tesla-multichoice {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .tesla-multichoice .choice {
+      background: #F5F7FA;
+      border: 1.5px solid #E3F2FD;
+      border-radius: 8px;
+      padding: 10px 18px;
+      font-size: 1rem;
+      color: #1976D2;
+      cursor: pointer;
+      transition: background 0.18s, border-color 0.18s, color 0.18s;
+    }
+    .tesla-multichoice .choice.active,
+    .tesla-multichoice .choice:active {
+      background: #2196F3;
+      color: #fff;
+      border-color: #1976D2;
+    }
+    .tesla-section textarea {
+      width: 100%;
+      min-height: 60px;
+      border: 1.5px solid #E3F2FD;
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 1rem;
+      background: #F8FAFB;
+      resize: vertical;
+    }
+    .tesla-text-count {
+      text-align: right;
+      color: #888;
+      font-size: 0.95em;
+      margin-top: 4px;
+    }
+    .tesla-form-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 18px;
+      margin-top: 18px;
+    }
+    .btn-primary {
+      background: #2196F3;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 32px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(33,150,243,0.10);
+      transition: background 0.2s;
+    }
+    .btn-primary:hover {
+      background: #1976D2;
+    }
+    .btn-secondary {
+      background: #F5F7FA;
+      color: #1976D2;
+      border: 1.5px solid #E3F2FD;
+      border-radius: 8px;
+      padding: 12px 32px;
+      font-size: 1.1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .btn-secondary:hover {
+      background: #E3F2FD;
+      color: #2196F3;
+    }
+    .back-btn {
+      background: none;
+      border: none;
+      color: #2196F3;
+      font-size: 1.5rem;
+      cursor: pointer;
+      margin-right: 10px;
+      padding: 0;
+      vertical-align: middle;
+    }
   </style>
   <!-- Google Fonts - Material Icons for icons -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -746,7 +874,7 @@
           <div class="content-header">
             <h2>客户档案管理</h2>
             <div class="action-buttons">
-              <button><i class="material-icons">person_add</i>新建客户</button>
+              <button id="newCustomerBtn"><i class="material-icons">person_add</i>新建客户</button>
               <button><i class="material-icons">assignment</i>已有客户</button>
             </div>
           </div>
@@ -770,6 +898,94 @@
               </div>
             </div>
           </div>
+        </div>
+
+        <!-- 新建客户页面 -->
+        <div class="content-card" id="newCustomerContent" style="display:none;">
+          <div class="content-header">
+            <button class="back-btn" id="backToCustomer"><i class="material-icons">arrow_back</i></button>
+            <h2>新建客户档案</h2>
+          </div>
+          <form class="tesla-form">
+            <!-- 基本信息 -->
+            <div class="tesla-section">
+              <h3>基本信息 <span class="required-tip">*为二选一必填</span></h3>
+              <div class="tesla-form-grid">
+                <div class="tesla-form-group">
+                  <label>姓名</label>
+                  <input type="text" placeholder="请输入姓名" required>
+                </div>
+                <div class="tesla-form-group">
+                  <label>病历编号</label>
+                  <input type="text" placeholder="请输入病历编号">
+                </div>
+                <div class="tesla-form-group">
+                  <label>性别</label>
+                  <select>
+                    <option>女</option>
+                    <option>男</option>
+                  </select>
+                </div>
+                <div class="tesla-form-group">
+                  <label>出生日期</label>
+                  <input type="date">
+                </div>
+                <div class="tesla-form-group">
+                  <label>联系电话</label>
+                  <input type="text" placeholder="请输入11位手机号">
+                </div>
+                <div class="tesla-form-group">
+                  <label>所在地</label>
+                  <input type="text" placeholder="请选择所在地">
+                </div>
+                <div class="tesla-form-group" style="grid-column: span 2;">
+                  <label>联系地址</label>
+                  <input type="text" placeholder="请输入详细地址">
+                </div>
+              </div>
+            </div>
+            <!-- 既往病史 -->
+            <div class="tesla-section">
+              <h3>既往病史</h3>
+              <div class="tesla-multichoice" id="historyChoices">
+                <button type="button" class="choice active">无</button>
+                <button type="button" class="choice">高血压</button>
+                <button type="button" class="choice">糖尿病</button>
+                <button type="button" class="choice">肺炎</button>
+                <button type="button" class="choice">胆结石</button>
+                <button type="button" class="choice">心脏病</button>
+                <button type="button" class="choice">肾结石</button>
+                <button type="button" class="choice">肝功能障碍</button>
+                <button type="button" class="choice">阑尾炎</button>
+                <button type="button" class="choice">其他</button>
+              </div>
+            </div>
+            <!-- 项目描述 -->
+            <div class="tesla-section">
+              <h3>项目描述 <span class="optional-tip">(可多选)</span></h3>
+              <div class="tesla-multichoice" id="projectChoices">
+                <button type="button" class="choice">综合隆鼻</button>
+                <button type="button" class="choice">隆鼻失败修复术</button>
+                <button type="button" class="choice">鼻翼缩小</button>
+                <button type="button" class="choice">鼻梁整形</button>
+                <button type="button" class="choice">鼻尖整形</button>
+                <button type="button" class="choice">鼻小柱整形</button>
+                <button type="button" class="choice">不良鼻型矫正</button>
+                <button type="button" class="choice">其他</button>
+              </div>
+            </div>
+            <!-- 项目备注 -->
+            <div class="tesla-section">
+              <h3>项目备注</h3>
+              <textarea maxlength="200" placeholder="请输入项目描述信息" id="projectRemark"></textarea>
+              <div class="tesla-text-count"><span id="remarkCount">0</span>/200</div>
+            </div>
+            <!-- 底部操作 -->
+            <div class="tesla-form-actions">
+              <button type="button" class="btn-secondary" id="cancelNewCustomer">返回</button>
+              <button type="submit" class="btn-primary">完成</button>
+            </div>
+          </form>
         </div>
 
         <!-- 拍照采集 -->
@@ -1070,6 +1286,56 @@
         console.log('Template selected:', this.querySelector('span').innerText);
       };
     });
+
+    // 新建客户页面交互
+    const newCustomerBtn = document.getElementById('newCustomerBtn');
+    const newCustomerContent = document.getElementById('newCustomerContent');
+    const customerContent = document.getElementById('customerContent');
+    const backToCustomer = document.getElementById('backToCustomer');
+    const cancelNewCustomer = document.getElementById('cancelNewCustomer');
+    if (newCustomerBtn) {
+      newCustomerBtn.onclick = function() {
+        customerContent.style.display = 'none';
+        newCustomerContent.style.display = 'block';
+      };
+    }
+    if (backToCustomer) {
+      backToCustomer.onclick = function() {
+        newCustomerContent.style.display = 'none';
+        customerContent.style.display = 'block';
+      };
+    }
+    if (cancelNewCustomer) {
+      cancelNewCustomer.onclick = function() {
+        newCustomerContent.style.display = 'none';
+        customerContent.style.display = 'block';
+      };
+    }
+    // 多选按钮高亮
+    function setupMultiChoice(containerId, single = false) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+      container.querySelectorAll('.choice').forEach(btn => {
+        btn.onclick = function() {
+          if (single) {
+            container.querySelectorAll('.choice').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+          } else {
+            this.classList.toggle('active');
+          }
+        };
+      });
+    }
+    setupMultiChoice('historyChoices');
+    setupMultiChoice('projectChoices');
+    // 备注字数统计
+    const projectRemark = document.getElementById('projectRemark');
+    const remarkCount = document.getElementById('remarkCount');
+    if (projectRemark && remarkCount) {
+      projectRemark.addEventListener('input', function() {
+        remarkCount.textContent = this.value.length;
+      });
+    }
 
   </script>
 </body>
