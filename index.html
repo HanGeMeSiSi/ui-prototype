@@ -111,11 +111,11 @@
       display: flex;
       align-items: center;
       z-index: 9999;
-      background: #FFFFFF;
+      background: #E3F2FD;
       backdrop-filter: blur(5px);
-      border-radius: 28px;
+      border-radius: 20px;
       padding: 6px 16px 6px 6px;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      box-shadow: 0 2px 12px rgba(33,150,243,0.08);
       cursor: pointer;
       transition: all 0.2s;
     }
@@ -126,7 +126,7 @@
       width: 44px;
       height: 44px;
       border-radius: 50%;
-      border: 3px solid #2196F3;
+      border: 3px solid #90CAF9;
       margin-right: 12px;
     }
     .user-info-fixed .username {
@@ -247,7 +247,7 @@
     }
     /* Collapsed state styles */
     .container.collapsed {
-        gap: 0; /* Remove gap when collapsed */
+      gap: 0; /* Remove gap when collapsed */
     }
     .container.collapsed .menu-section,
     .container.collapsed .content-section {
@@ -329,15 +329,15 @@
       padding-top: 20px;
     }
     .customer-item {
-      background: #FFFFFF;
-      border: 1px solid #E0E0E0;
-      border-radius: 12px;
+      background: #fff;
+      border: 1.5px solid #B3E5FC;
+      border-radius: 14px;
       padding: 15px 20px;
       margin-bottom: 10px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      box-shadow: 0 1px 6px rgba(0,0,0,0.03);
+      box-shadow: 0 2px 8px rgba(33,150,243,0.04);
       transition: all 0.2s;
     }
     .customer-item:hover {
@@ -712,18 +712,20 @@
       display: block;
     }
     .tesla-form-group input,
-    .tesla-form-group select {
+    .tesla-form-group select, .custom-project-input {
       width: 100%;
       padding: 10px 12px;
       border: 1.5px solid #E3F2FD;
       border-radius: 8px;
       font-size: 1rem;
-      background: #F8FAFB;
-      transition: border-color 0.2s;
+      background: #F5F7FA;
+      transition: border-color 0.18s, box-shadow 0.18s;
+      color: #222;
     }
     .tesla-form-group input:focus,
-    .tesla-form-group select:focus {
+    .tesla-form-group select:focus, .custom-project-input:focus {
       border-color: #2196F3;
+      box-shadow: 0 0 0 2px #E3F2FD;
       outline: none;
     }
     .tesla-multichoice {
@@ -732,20 +734,16 @@
       gap: 12px;
     }
     .tesla-multichoice .choice {
-      background: #F5F7FA;
-      border: 1.5px solid #E3F2FD;
+      background: #E3F2FD;
+      border: none;
       border-radius: 8px;
-      padding: 10px 18px;
-      font-size: 1rem;
       color: #1976D2;
-      cursor: pointer;
-      transition: background 0.18s, border-color 0.18s, color 0.18s;
+      font-weight: 500;
+      transition: background 0.18s, color 0.18s;
     }
-    .tesla-multichoice .choice.active,
-    .tesla-multichoice .choice:active {
+    .tesla-multichoice .choice.active, .tesla-multichoice .choice:active {
       background: #2196F3;
       color: #fff;
-      border-color: #1976D2;
     }
     .tesla-section textarea {
       width: 100%;
@@ -754,8 +752,14 @@
       border-radius: 8px;
       padding: 10px 12px;
       font-size: 1rem;
-      background: #F8FAFB;
+      background: #F5F7FA;
       resize: vertical;
+      color: #222;
+    }
+    .tesla-section textarea:focus {
+      border-color: #2196F3;
+      box-shadow: 0 0 0 2px #E3F2FD;
+      outline: none;
     }
     .tesla-text-count {
       text-align: right;
@@ -769,34 +773,32 @@
       gap: 18px;
       margin-top: 18px;
     }
-    .btn-primary {
+    .btn-primary, .custom-project-add {
       background: #2196F3;
       color: #fff;
       border: none;
-      border-radius: 8px;
+      border-radius: 10px;
       padding: 12px 32px;
-      font-size: 1.1rem;
+      font-size: 1.08rem;
       font-weight: 600;
-      cursor: pointer;
-      box-shadow: 0 2px 8px rgba(33,150,243,0.10);
-      transition: background 0.2s;
+      box-shadow: 0 2px 8px rgba(33,150,243,0.08);
+      transition: background 0.18s;
     }
-    .btn-primary:hover {
+    .btn-primary:hover, .custom-project-add:hover {
       background: #1976D2;
     }
     .btn-secondary {
-      background: #F5F7FA;
+      background: #E3F2FD;
       color: #1976D2;
-      border: 1.5px solid #E3F2FD;
-      border-radius: 8px;
+      border: none;
+      border-radius: 10px;
       padding: 12px 32px;
-      font-size: 1.1rem;
+      font-size: 1.08rem;
       font-weight: 500;
-      cursor: pointer;
-      transition: background 0.2s, color 0.2s;
+      transition: background 0.18s, color 0.18s;
     }
     .btn-secondary:hover {
-      background: #E3F2FD;
+      background: #BBDEFB;
       color: #2196F3;
     }
     .back-btn {
@@ -808,6 +810,71 @@
       margin-right: 10px;
       padding: 0;
       vertical-align: middle;
+    }
+    .tesla-mainmenu {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    .tesla-mainmenu .mainmenu-btn {
+      background: #E3F2FD;
+      color: #1976D2;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: background 0.18s, color 0.18s;
+    }
+    .tesla-mainmenu .mainmenu-btn.active, .tesla-mainmenu .mainmenu-btn:active {
+      background: #2196F3;
+      color: #fff;
+    }
+    .custom-project-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 12px;
+      align-items: center;
+    }
+    .storage-bar {
+      position: relative;
+      background: #E3F2FD;
+      border-radius: 8px;
+      height: 18px;
+      width: 220px;
+      margin: 6px 0;
+      overflow: hidden;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .storage-bar-inner {
+      background: #2196F3;
+      height: 100%;
+      border-radius: 8px 0 0 8px;
+      transition: width 0.4s;
+    }
+    .storage-text {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      transform: translateX(-50%);
+      font-size: 0.95rem;
+      color: #1976D2;
+      font-weight: 500;
+      line-height: 18px;
+    }
+    .contact-card {
+      background: #E3F2FD;
+      color: #1976D2;
+      border-radius: 10px;
+      box-shadow: 0 1px 4px rgba(33,150,243,0.04);
+      padding: 10px 16px;
+      margin-top: 4px;
+      font-size: 1rem;
+    }
+    .contact-card a {
+      color: #2196F3;
+      text-decoration: none;
+    }
+    .contact-card a:hover {
+      text-decoration: underline;
     }
   </style>
   <!-- Google Fonts - Material Icons for icons -->
@@ -851,9 +918,6 @@
         </li>
         <li class="menu-item" data-content="capture">
           <i class="material-icons">camera_alt</i>拍照采集
-        </li>
-        <li class="menu-item" data-content="calibrate">
-          <i class="material-icons">straighten</i>校准对齐
         </li>
         <li class="menu-item" data-content="compare">
           <i class="material-icons">compare</i>对比查看
@@ -963,7 +1027,15 @@
             <!-- 项目描述 -->
             <div class="tesla-section">
               <h3>项目描述 <span class="optional-tip">(可多选)</span></h3>
-              <div class="tesla-multichoice" id="projectChoices">
+              <div class="tesla-mainmenu" id="projectMainMenu">
+                <button type="button" class="mainmenu-btn active" data-type="face">面部</button>
+                <button type="button" class="mainmenu-btn" data-type="neck">颈部</button>
+                <button type="button" class="mainmenu-btn" data-type="chest">胸部</button>
+                <button type="button" class="mainmenu-btn" data-type="waist">腰腹</button>
+                <button type="button" class="mainmenu-btn" data-type="thigh">大腿</button>
+                <button type="button" class="mainmenu-btn" data-type="calf">小腿</button>
+              </div>
+              <div class="tesla-multichoice" id="projectChoices-face">
                 <button type="button" class="choice">综合隆鼻</button>
                 <button type="button" class="choice">隆鼻失败修复术</button>
                 <button type="button" class="choice">鼻翼缩小</button>
@@ -972,6 +1044,58 @@
                 <button type="button" class="choice">鼻小柱整形</button>
                 <button type="button" class="choice">不良鼻型矫正</button>
                 <button type="button" class="choice">其他</button>
+              </div>
+              <div class="custom-project-row">
+                <input type="text" class="custom-project-input" placeholder="自定义项目名称">
+                <button type="button" class="custom-project-add">添加</button>
+              </div>
+              <div class="tesla-multichoice" id="projectChoices-neck" style="display:none;">
+                <button type="button" class="choice">颈部除皱</button>
+                <button type="button" class="choice">颈部吸脂</button>
+                <button type="button" class="choice">颈部提升</button>
+                <button type="button" class="choice">其他</button>
+              </div>
+              <div class="custom-project-row" style="display:none;">
+                <input type="text" class="custom-project-input" placeholder="自定义项目名称">
+                <button type="button" class="custom-project-add">添加</button>
+              </div>
+              <div class="tesla-multichoice" id="projectChoices-chest" style="display:none;">
+                <button type="button" class="choice">隆胸</button>
+                <button type="button" class="choice">缩胸</button>
+                <button type="button" class="choice">乳头整形</button>
+                <button type="button" class="choice">乳晕整形</button>
+                <button type="button" class="choice">其他</button>
+              </div>
+              <div class="custom-project-row" style="display:none;">
+                <input type="text" class="custom-project-input" placeholder="自定义项目名称">
+                <button type="button" class="custom-project-add">添加</button>
+              </div>
+              <div class="tesla-multichoice" id="projectChoices-waist" style="display:none;">
+                <button type="button" class="choice">腰腹吸脂</button>
+                <button type="button" class="choice">腹壁整形</button>
+                <button type="button" class="choice">其他</button>
+              </div>
+              <div class="custom-project-row" style="display:none;">
+                <input type="text" class="custom-project-input" placeholder="自定义项目名称">
+                <button type="button" class="custom-project-add">添加</button>
+              </div>
+              <div class="tesla-multichoice" id="projectChoices-thigh" style="display:none;">
+                <button type="button" class="choice">大腿吸脂</button>
+                <button type="button" class="choice">大腿提升</button>
+                <button type="button" class="choice">其他</button>
+              </div>
+              <div class="custom-project-row" style="display:none;">
+                <input type="text" class="custom-project-input" placeholder="自定义项目名称">
+                <button type="button" class="custom-project-add">添加</button>
+              </div>
+              <div class="tesla-multichoice" id="projectChoices-calf" style="display:none;">
+                <button type="button" class="choice">小腿吸脂</button>
+                <button type="button" class="choice">小腿肌肉整形</button>
+                <button type="button" class="choice">其他</button>
+              </div>
+              <div class="custom-project-row" style="display:none;">
+                <input type="text" class="custom-project-input" placeholder="自定义项目名称">
+                <button type="button" class="custom-project-add">添加</button>
               </div>
             </div>
             <!-- 项目备注 -->
@@ -1069,6 +1193,7 @@
         <!-- 校准对齐 -->
         <div class="content-card" id="calibrateContent" style="display:none;">
           <div class="content-header">
+            <button class="back-btn" id="backToCapture"><i class="material-icons">arrow_back</i></button>
             <h2>校准对齐</h2>
           </div>
 
@@ -1193,6 +1318,21 @@
             <div class="setting-item">
               <label for="appVersion">版本:</label>
               <span>V1.2.0</span>
+            </div>
+            <div class="setting-item">
+              <label for="storage">储存空间:</label>
+              <div class="storage-bar">
+                <div class="storage-bar-inner" style="width: 60%;"></div>
+                <span class="storage-text">60GB / 100GB</span>
+              </div>
+            </div>
+            <div class="setting-item">
+              <label>联系售后:</label>
+              <div class="contact-card">
+                <div>电话：<a href="tel:400-123-4567">400-123-4567</a></div>
+                <div>微信：<span style="color:#2196F3;">med_support</span></div>
+                <div>邮箱：<a href="mailto:support@med.com">support@med.com</a></div>
+              </div>
             </div>
           </div>
           <div class="control-buttons" style="justify-content: flex-end;">
@@ -1327,7 +1467,12 @@
       });
     }
     setupMultiChoice('historyChoices');
-    setupMultiChoice('projectChoices');
+    setupMultiChoice('projectChoices-face');
+    setupMultiChoice('projectChoices-neck');
+    setupMultiChoice('projectChoices-chest');
+    setupMultiChoice('projectChoices-waist');
+    setupMultiChoice('projectChoices-thigh');
+    setupMultiChoice('projectChoices-calf');
     // 备注字数统计
     const projectRemark = document.getElementById('projectRemark');
     const remarkCount = document.getElementById('remarkCount');
@@ -1335,6 +1480,71 @@
       projectRemark.addEventListener('input', function() {
         remarkCount.textContent = this.value.length;
       });
+    }
+
+    // 项目描述主菜单切换
+    const mainMenuBtns = document.querySelectorAll('#projectMainMenu .mainmenu-btn');
+    const projectChoicesSections = [
+      'face', 'neck', 'chest', 'waist', 'thigh', 'calf'
+    ].map(type => document.getElementById('projectChoices-' + type));
+    mainMenuBtns.forEach(btn => {
+      btn.onclick = function() {
+        mainMenuBtns.forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        projectChoicesSections.forEach(section => section.style.display = 'none');
+        const type = this.getAttribute('data-type');
+        const showSection = document.getElementById('projectChoices-' + type);
+        if (showSection) showSection.style.display = 'flex';
+      };
+    });
+
+    // 自定义项目添加功能
+    function setupCustomProject(mainType) {
+      const section = document.getElementById('projectChoices-' + mainType);
+      const customRow = section.nextElementSibling;
+      const input = customRow.querySelector('.custom-project-input');
+      const addBtn = customRow.querySelector('.custom-project-add');
+      addBtn.onclick = function() {
+        const val = input.value.trim();
+        if (!val) return;
+        // 检查是否已存在
+        let exists = false;
+        section.querySelectorAll('.choice').forEach(btn => {
+          if (btn.textContent === val) exists = true;
+        });
+        if (exists) {
+          input.value = '';
+          return;
+        }
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'choice active';
+        btn.textContent = val;
+        btn.onclick = function() { this.classList.toggle('active'); };
+        section.appendChild(btn);
+        input.value = '';
+      };
+    }
+    ['face','neck','chest','waist','thigh','calf'].forEach(setupCustomProject);
+
+    // 拍照采集页面"开始校准"按钮跳转到校准对齐页面
+    const startCalibrateBtn = Array.from(document.querySelectorAll('#captureContent .control-buttons button')).find(btn => btn.textContent.includes('开始校准'));
+    const captureContent = document.getElementById('captureContent');
+    const calibrateContent = document.getElementById('calibrateContent');
+    if (startCalibrateBtn && calibrateContent && captureContent) {
+      startCalibrateBtn.onclick = function() {
+        captureContent.style.display = 'none';
+        calibrateContent.style.display = 'block';
+      };
+    }
+
+    // 校准对齐页面返回按钮，返回到拍照采集页面
+    const backToCapture = document.getElementById('backToCapture');
+    if (backToCapture && calibrateContent && captureContent) {
+      backToCapture.onclick = function() {
+        calibrateContent.style.display = 'none';
+        captureContent.style.display = 'block';
+      };
     }
 
   </script>
