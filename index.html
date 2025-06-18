@@ -33,7 +33,9 @@
     }
     .device-section {
       flex-shrink: 0;
-      width: 320px; /* Fixed width for the device section */
+      width: 33.33vw;      /* 占据三分之一宽度 */
+      min-width: 320px;    /* 保证最小宽度 */
+      max-width: 600px;    /* 可根据实际需求调整最大宽度 */
       align-items: center;
       justify-content: center;
       background: linear-gradient(135deg, #2196F3 0%, #0D47A1 100%); /* Blue gradient */
@@ -255,7 +257,9 @@
     }
     .container.collapsed .device-section {
       flex: 1; /* Take all available horizontal space */
-      width: auto; /* Override fixed width */
+      width: 100%; /* Override fixed width */
+      max-width: 100%;
+      min-width: 100%;
       border-radius: 24px; /* Ensure full rounded corners */
       margin: 0; /* Remove any lingering margins */
     }
@@ -876,6 +880,32 @@
     .contact-card a:hover {
       text-decoration: underline;
     }
+    .main-panel.section-base {
+      display: flex;
+      flex-direction: row;
+      flex: 1 1 0%;
+      min-width: 0;
+      min-height: 0;
+      padding: 0;
+      box-sizing: border-box;
+      background: #fff;
+      border-radius: 24px;
+      box-shadow: 0 4px 24px 0 rgba(0,0,0,0.08);
+      overflow: hidden;
+    }
+    .main-panel .menu-section {
+      width: 220px;
+      border-right: 1px solid #E0E0E0;
+      padding: 32px 0 32px 0;
+      background: none;
+      box-shadow: none;
+    }
+    .main-panel .content-section {
+      flex: 1 1 0%;
+      padding: 32px;
+      background: none;
+      box-shadow: none;
+    }
   </style>
   <!-- Google Fonts - Material Icons for icons -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -910,433 +940,434 @@
         <br/>(模拟模型)
       </div>
     </div>
-    <!-- 菜单功能区 -->
-    <div class="menu-section section-base" id="menuSection">
-      <ul class="menu-list">
-        <li class="menu-item active" data-content="customer">
-          <i class="material-icons">people</i>客户档案
-        </li>
-        <li class="menu-item" data-content="capture">
-          <i class="material-icons">camera_alt</i>拍照采集
-        </li>
-        <li class="menu-item" data-content="compare">
-          <i class="material-icons">compare</i>对比查看
-        </li>
-        <li class="menu-item" data-content="stats">
-          <i class="material-icons">bar_chart</i>数据统计
-        </li>
-        <li class="menu-item" data-content="settings">
-          <i class="material-icons">settings</i>系统设置
-        </li>
-      </ul>
-    </div>
-    <!-- 内容区 -->
-    <div class="content-section section-base" id="contentSection">
-      <div class="content-area" id="contentArea">
-        <!-- 客户档案管理 -->
-        <div class="content-card" id="customerContent">
-          <div class="content-header">
-            <h2>客户档案管理</h2>
-            <div class="action-buttons">
-              <button id="newCustomerBtn"><i class="material-icons">person_add</i>新建客户</button>
-              <button><i class="material-icons">assignment</i>已有客户</button>
-            </div>
-          </div>
-          <div class="input-group">
-            <label for="customerSearch">搜索客户姓名/病历号:</label>
-            <input type="text" id="customerSearch" placeholder="请输入姓名或病历号">
-          </div>
-          <div class="customer-list">
-            <div class="customer-item">
-              <span>姓名: 模特01 | 性别: 女 | 生日: 2023-04-26</span>
-              <div class="customer-actions">
-                <button>查看</button>
-                <button>编辑</button>
+    <!-- 主面板：菜单和内容合并在一个大卡片 -->
+    <div class="main-panel section-base">
+      <div class="menu-section" id="menuSection">
+        <ul class="menu-list">
+          <li class="menu-item active" data-content="customer">
+            <i class="material-icons">people</i>客户档案
+          </li>
+          <li class="menu-item" data-content="capture">
+            <i class="material-icons">camera_alt</i>拍照采集
+          </li>
+          <li class="menu-item" data-content="compare">
+            <i class="material-icons">compare</i>对比查看
+          </li>
+          <li class="menu-item" data-content="stats">
+            <i class="material-icons">bar_chart</i>数据统计
+          </li>
+          <li class="menu-item" data-content="settings">
+            <i class="material-icons">settings</i>系统设置
+          </li>
+        </ul>
+      </div>
+      <div class="content-section" id="contentSection">
+        <div class="content-area" id="contentArea">
+          <!-- 客户档案管理 -->
+          <div class="content-card" id="customerContent">
+            <div class="content-header">
+              <h2>客户档案管理</h2>
+              <div class="action-buttons">
+                <button id="newCustomerBtn"><i class="material-icons">person_add</i>新建客户</button>
+                <button><i class="material-icons">assignment</i>已有客户</button>
               </div>
             </div>
-            <div class="customer-item">
-              <span>姓名: 张三 | 性别: 男 | 生日: 1990-01-15</span>
-              <div class="customer-actions">
-                <button>查看</button>
-                <button>编辑</button>
-              </div>
+            <div class="input-group">
+              <label for="customerSearch">搜索客户姓名/病历号:</label>
+              <input type="text" id="customerSearch" placeholder="请输入姓名或病历号">
             </div>
-          </div>
-        </div>
-
-        <!-- 新建客户页面 -->
-        <div class="content-card" id="newCustomerContent" style="display:none;">
-          <div class="content-header">
-            <button class="back-btn" id="backToCustomer"><i class="material-icons">arrow_back</i></button>
-            <h2>新建客户档案</h2>
-          </div>
-          <form class="tesla-form">
-            <!-- 基本信息 -->
-            <div class="tesla-section">
-              <h3>基本信息 <span class="required-tip">*为二选一必填</span></h3>
-              <div class="tesla-form-grid">
-                <div class="tesla-form-group">
-                  <label>姓名</label>
-                  <input type="text" placeholder="请输入姓名" required>
+            <div class="customer-list">
+              <div class="customer-item">
+                <span>姓名: 模特01 | 性别: 女 | 生日: 2023-04-26</span>
+                <div class="customer-actions">
+                  <button>查看</button>
+                  <button>编辑</button>
                 </div>
-                <div class="tesla-form-group">
-                  <label>病历编号</label>
-                  <input type="text" placeholder="请输入病历编号">
-                </div>
-                <div class="tesla-form-group">
-                  <label>性别</label>
-                  <select>
-                    <option>女</option>
-                    <option>男</option>
-                  </select>
-                </div>
-                <div class="tesla-form-group">
-                  <label>出生日期</label>
-                  <input type="date">
-                </div>
-                <div class="tesla-form-group">
-                  <label>联系电话</label>
-                  <input type="text" placeholder="请输入11位手机号">
-                </div>
-                <div class="tesla-form-group">
-                  <label>所在地</label>
-                  <input type="text" placeholder="请选择所在地">
-                </div>
-                <div class="tesla-form-group" style="grid-column: span 2;">
-                  <label>联系地址</label>
-                  <input type="text" placeholder="请输入详细地址">
+              </div>
+              <div class="customer-item">
+                <span>姓名: 张三 | 性别: 男 | 生日: 1990-01-15</span>
+                <div class="customer-actions">
+                  <button>查看</button>
+                  <button>编辑</button>
                 </div>
               </div>
             </div>
-            <!-- 既往病史 -->
-            <div class="tesla-section">
-              <h3>既往病史</h3>
-              <div class="tesla-multichoice" id="historyChoices">
-                <button type="button" class="choice active">无</button>
-                <button type="button" class="choice">高血压</button>
-                <button type="button" class="choice">糖尿病</button>
-                <button type="button" class="choice">肺炎</button>
-                <button type="button" class="choice">胆结石</button>
-                <button type="button" class="choice">心脏病</button>
-                <button type="button" class="choice">肾结石</button>
-                <button type="button" class="choice">肝功能障碍</button>
-                <button type="button" class="choice">阑尾炎</button>
-                <button type="button" class="choice">其他</button>
-              </div>
-            </div>
-            <!-- 项目描述 -->
-            <div class="tesla-section">
-              <h3>项目描述 <span class="optional-tip">(可多选)</span></h3>
-              <div class="tesla-mainmenu" id="projectMainMenu">
-                <button type="button" class="mainmenu-btn active" data-type="face">面部</button>
-                <button type="button" class="mainmenu-btn" data-type="neck">颈部</button>
-                <button type="button" class="mainmenu-btn" data-type="chest">胸部</button>
-                <button type="button" class="mainmenu-btn" data-type="waist">腰腹</button>
-                <button type="button" class="mainmenu-btn" data-type="thigh">大腿</button>
-                <button type="button" class="mainmenu-btn" data-type="calf">小腿</button>
-              </div>
-              <div class="tesla-multichoice" id="projectChoices-face">
-                <button type="button" class="choice">综合隆鼻</button>
-                <button type="button" class="choice">隆鼻失败修复术</button>
-                <button type="button" class="choice">鼻翼缩小</button>
-                <button type="button" class="choice">鼻梁整形</button>
-                <button type="button" class="choice">鼻尖整形</button>
-                <button type="button" class="choice">鼻小柱整形</button>
-                <button type="button" class="choice">不良鼻型矫正</button>
-                <button type="button" class="choice">其他</button>
-              </div>
-              <div class="custom-project-row">
-                <input type="text" class="custom-project-input" placeholder="自定义项目名称">
-                <button type="button" class="custom-project-add">添加</button>
-              </div>
-              <div class="tesla-multichoice" id="projectChoices-neck" style="display:none;">
-                <button type="button" class="choice">颈部除皱</button>
-                <button type="button" class="choice">颈部吸脂</button>
-                <button type="button" class="choice">颈部提升</button>
-                <button type="button" class="choice">其他</button>
-              </div>
-              <div class="custom-project-row" style="display:none;">
-                <input type="text" class="custom-project-input" placeholder="自定义项目名称">
-                <button type="button" class="custom-project-add">添加</button>
-              </div>
-              <div class="tesla-multichoice" id="projectChoices-chest" style="display:none;">
-                <button type="button" class="choice">隆胸</button>
-                <button type="button" class="choice">缩胸</button>
-                <button type="button" class="choice">乳头整形</button>
-                <button type="button" class="choice">乳晕整形</button>
-                <button type="button" class="choice">其他</button>
-              </div>
-              <div class="custom-project-row" style="display:none;">
-                <input type="text" class="custom-project-input" placeholder="自定义项目名称">
-                <button type="button" class="custom-project-add">添加</button>
-              </div>
-              <div class="tesla-multichoice" id="projectChoices-waist" style="display:none;">
-                <button type="button" class="choice">腰腹吸脂</button>
-                <button type="button" class="choice">腹壁整形</button>
-                <button type="button" class="choice">其他</button>
-              </div>
-              <div class="custom-project-row" style="display:none;">
-                <input type="text" class="custom-project-input" placeholder="自定义项目名称">
-                <button type="button" class="custom-project-add">添加</button>
-              </div>
-              <div class="tesla-multichoice" id="projectChoices-thigh" style="display:none;">
-                <button type="button" class="choice">大腿吸脂</button>
-                <button type="button" class="choice">大腿提升</button>
-                <button type="button" class="choice">其他</button>
-              </div>
-              <div class="custom-project-row" style="display:none;">
-                <input type="text" class="custom-project-input" placeholder="自定义项目名称">
-                <button type="button" class="custom-project-add">添加</button>
-              </div>
-              <div class="tesla-multichoice" id="projectChoices-calf" style="display:none;">
-                <button type="button" class="choice">小腿吸脂</button>
-                <button type="button" class="choice">小腿肌肉整形</button>
-                <button type="button" class="choice">其他</button>
-              </div>
-              <div class="custom-project-row" style="display:none;">
-                <input type="text" class="custom-project-input" placeholder="自定义项目名称">
-                <button type="button" class="custom-project-add">添加</button>
-              </div>
-            </div>
-            <!-- 项目备注 -->
-            <div class="tesla-section">
-              <h3>项目备注</h3>
-              <textarea maxlength="200" placeholder="请输入项目描述信息" id="projectRemark"></textarea>
-              <div class="tesla-text-count"><span id="remarkCount">0</span>/200</div>
-            </div>
-            <!-- 底部操作 -->
-            <div class="tesla-form-actions">
-              <button type="button" class="btn-secondary" id="cancelNewCustomer">返回</button>
-              <button type="submit" class="btn-primary">完成</button>
-            </div>
-          </form>
-        </div>
-
-        <!-- 拍照采集 -->
-        <div class="content-card" id="captureContent" style="display:none;">
-          <div class="content-header">
-            <h2>拍照采集</h2>
-            <div class="action-buttons">
-                <button><i class="material-icons">add_photo_alternate</i>更换模板背景</button>
-                <button><i class="material-icons">water_drop</i>关闭模板水印</button>
-            </div>
           </div>
 
-          <h3>拍摄类型:</h3>
-          <div class="tab-nav">
-            <div class="tab-nav-item active">面部</div>
-            <div class="tab-nav-item">身体</div>
-            <div class="tab-nav-item">项目</div>
+          <!-- 新建客户页面 -->
+          <div class="content-card" id="newCustomerContent" style="display:none;">
+            <div class="content-header">
+              <button class="back-btn" id="backToCustomer"><i class="material-icons">arrow_back</i></button>
+              <h2>新建客户档案</h2>
+            </div>
+            <form class="tesla-form">
+              <!-- 基本信息 -->
+              <div class="tesla-section">
+                <h3>基本信息 <span class="required-tip">*为二选一必填</span></h3>
+                <div class="tesla-form-grid">
+                  <div class="tesla-form-group">
+                    <label>姓名</label>
+                    <input type="text" placeholder="请输入姓名" required>
+                  </div>
+                  <div class="tesla-form-group">
+                    <label>病历编号</label>
+                    <input type="text" placeholder="请输入病历编号">
+                  </div>
+                  <div class="tesla-form-group">
+                    <label>性别</label>
+                    <select>
+                      <option>女</option>
+                      <option>男</option>
+                    </select>
+                  </div>
+                  <div class="tesla-form-group">
+                    <label>出生日期</label>
+                    <input type="date">
+                  </div>
+                  <div class="tesla-form-group">
+                    <label>联系电话</label>
+                    <input type="text" placeholder="请输入11位手机号">
+                  </div>
+                  <div class="tesla-form-group">
+                    <label>所在地</label>
+                    <input type="text" placeholder="请选择所在地">
+                  </div>
+                  <div class="tesla-form-group" style="grid-column: span 2;">
+                    <label>联系地址</label>
+                    <input type="text" placeholder="请输入详细地址">
+                  </div>
+                </div>
+              </div>
+              <!-- 既往病史 -->
+              <div class="tesla-section">
+                <h3>既往病史</h3>
+                <div class="tesla-multichoice" id="historyChoices">
+                  <button type="button" class="choice active">无</button>
+                  <button type="button" class="choice">高血压</button>
+                  <button type="button" class="choice">糖尿病</button>
+                  <button type="button" class="choice">肺炎</button>
+                  <button type="button" class="choice">胆结石</button>
+                  <button type="button" class="choice">心脏病</button>
+                  <button type="button" class="choice">肾结石</button>
+                  <button type="button" class="choice">肝功能障碍</button>
+                  <button type="button" class="choice">阑尾炎</button>
+                  <button type="button" class="choice">其他</button>
+                </div>
+              </div>
+              <!-- 项目描述 -->
+              <div class="tesla-section">
+                <h3>项目描述 <span class="optional-tip">(可多选)</span></h3>
+                <div class="tesla-mainmenu" id="projectMainMenu">
+                  <button type="button" class="mainmenu-btn active" data-type="face">面部</button>
+                  <button type="button" class="mainmenu-btn" data-type="neck">颈部</button>
+                  <button type="button" class="mainmenu-btn" data-type="chest">胸部</button>
+                  <button type="button" class="mainmenu-btn" data-type="waist">腰腹</button>
+                  <button type="button" class="mainmenu-btn" data-type="thigh">大腿</button>
+                  <button type="button" class="mainmenu-btn" data-type="calf">小腿</button>
+                </div>
+                <div class="tesla-multichoice" id="projectChoices-face">
+                  <button type="button" class="choice">综合隆鼻</button>
+                  <button type="button" class="choice">隆鼻失败修复术</button>
+                  <button type="button" class="choice">鼻翼缩小</button>
+                  <button type="button" class="choice">鼻梁整形</button>
+                  <button type="button" class="choice">鼻尖整形</button>
+                  <button type="button" class="choice">鼻小柱整形</button>
+                  <button type="button" class="choice">不良鼻型矫正</button>
+                  <button type="button" class="choice">其他</button>
+                </div>
+                <div class="custom-project-row">
+                  <input type="text" class="custom-project-input" placeholder="自定义项目名称">
+                  <button type="button" class="custom-project-add">添加</button>
+                </div>
+                <div class="tesla-multichoice" id="projectChoices-neck" style="display:none;">
+                  <button type="button" class="choice">颈部除皱</button>
+                  <button type="button" class="choice">颈部吸脂</button>
+                  <button type="button" class="choice">颈部提升</button>
+                  <button type="button" class="choice">其他</button>
+                </div>
+                <div class="custom-project-row" style="display:none;">
+                  <input type="text" class="custom-project-input" placeholder="自定义项目名称">
+                  <button type="button" class="custom-project-add">添加</button>
+                </div>
+                <div class="tesla-multichoice" id="projectChoices-chest" style="display:none;">
+                  <button type="button" class="choice">隆胸</button>
+                  <button type="button" class="choice">缩胸</button>
+                  <button type="button" class="choice">乳头整形</button>
+                  <button type="button" class="choice">乳晕整形</button>
+                  <button type="button" class="choice">其他</button>
+                </div>
+                <div class="custom-project-row" style="display:none;">
+                  <input type="text" class="custom-project-input" placeholder="自定义项目名称">
+                  <button type="button" class="custom-project-add">添加</button>
+                </div>
+                <div class="tesla-multichoice" id="projectChoices-waist" style="display:none;">
+                  <button type="button" class="choice">腰腹吸脂</button>
+                  <button type="button" class="choice">腹壁整形</button>
+                  <button type="button" class="choice">其他</button>
+                </div>
+                <div class="custom-project-row" style="display:none;">
+                  <input type="text" class="custom-project-input" placeholder="自定义项目名称">
+                  <button type="button" class="custom-project-add">添加</button>
+                </div>
+                <div class="tesla-multichoice" id="projectChoices-thigh" style="display:none;">
+                  <button type="button" class="choice">大腿吸脂</button>
+                  <button type="button" class="choice">大腿提升</button>
+                  <button type="button" class="choice">其他</button>
+                </div>
+                <div class="custom-project-row" style="display:none;">
+                  <input type="text" class="custom-project-input" placeholder="自定义项目名称">
+                  <button type="button" class="custom-project-add">添加</button>
+                </div>
+                <div class="tesla-multichoice" id="projectChoices-calf" style="display:none;">
+                  <button type="button" class="choice">小腿吸脂</button>
+                  <button type="button" class="choice">小腿肌肉整形</button>
+                  <button type="button" class="choice">其他</button>
+                </div>
+                <div class="custom-project-row" style="display:none;">
+                  <input type="text" class="custom-project-input" placeholder="自定义项目名称">
+                  <button type="button" class="custom-project-add">添加</button>
+                </div>
+              </div>
+              <!-- 项目备注 -->
+              <div class="tesla-section">
+                <h3>项目备注</h3>
+                <textarea maxlength="200" placeholder="请输入项目描述信息" id="projectRemark"></textarea>
+                <div class="tesla-text-count"><span id="remarkCount">0</span>/200</div>
+              </div>
+              <!-- 底部操作 -->
+              <div class="tesla-form-actions">
+                <button type="button" class="btn-secondary" id="cancelNewCustomer">返回</button>
+                <button type="submit" class="btn-primary">完成</button>
+              </div>
+            </form>
           </div>
 
-          <h3>拍摄模板:</h3>
-          <div class="template-grid">
-            <div class="template-item selected">
-              <i class="material-icons">face</i>
-              <span>脸正前</span>
-            </div>
-            <div class="template-item">
-              <i class="material-icons">face</i>
-              <span>脸左45</span>
-            </div>
-            <div class="template-item">
-              <i class="material-icons">face</i>
-              <span>脸右45</span>
-            </div>
-            <div class="template-item">
-              <i class="material-icons">face</i>
-              <span>脸左90</span>
-            </div>
-            <div class="template-item">
-              <i class="material-icons">face</i>
-              <span>脸右90</span>
-            </div>
-            <div class="template-item">
-              <i class="material-icons">nose_tip</i>
-              <span>鼻部</span>
-            </div>
-            <div class="template-item">
-              <i class="material-icons">ear_buds</i>
-              <span>耳部</span>
-            </div>
-          </div>
-
-          <h3 style="margin-top: 30px;">拍摄预览:</h3>
-          <div class="image-gallery">
-            <div class="image-gallery-item">
-              <img src="https://i.pravatar.cc/150?img=1" alt="Placeholder Image">
-            </div>
-            <div class="image-gallery-item">
-              <img src="https://i.pravatar.cc/150?img=2" alt="Placeholder Image">
-            </div>
-            <div class="image-gallery-item">
-              <img src="https://i.pravatar.cc/150?img=3" alt="Placeholder Image">
-            </div>
-            <div class="image-gallery-item">
-              <div style="background:#E0E0E0; width:100%; height:100%; display:flex; align-items:center; justify-content:center;">
-                <i class="material-icons" style="font-size:3rem; color:#B0B3B8;">camera_alt</i>
+          <!-- 拍照采集 -->
+          <div class="content-card" id="captureContent" style="display:none;">
+            <div class="content-header">
+              <h2>拍照采集</h2>
+              <div class="action-buttons">
+                  <button><i class="material-icons">add_photo_alternate</i>更换模板背景</button>
+                  <button><i class="material-icons">water_drop</i>关闭模板水印</button>
               </div>
             </div>
-            <div class="image-gallery-item">
-              <div style="background:#E0E0E0; width:100%; height:100%; display:flex; align-items:center; justify-content:center;">
-                <i class="material-icons" style="font-size:3rem; color:#B0B3B8;">camera_alt</i>
+
+            <h3>拍摄类型:</h3>
+            <div class="tab-nav">
+              <div class="tab-nav-item active">面部</div>
+              <div class="tab-nav-item">身体</div>
+              <div class="tab-nav-item">项目</div>
+            </div>
+
+            <h3>拍摄模板:</h3>
+            <div class="template-grid">
+              <div class="template-item selected">
+                <i class="material-icons">face</i>
+                <span>脸正前</span>
+              </div>
+              <div class="template-item">
+                <i class="material-icons">face</i>
+                <span>脸左45</span>
+              </div>
+              <div class="template-item">
+                <i class="material-icons">face</i>
+                <span>脸右45</span>
+              </div>
+              <div class="template-item">
+                <i class="material-icons">face</i>
+                <span>脸左90</span>
+              </div>
+              <div class="template-item">
+                <i class="material-icons">face</i>
+                <span>脸右90</span>
+              </div>
+              <div class="template-item">
+                <i class="material-icons">nose_tip</i>
+                <span>鼻部</span>
+              </div>
+              <div class="template-item">
+                <i class="material-icons">ear_buds</i>
+                <span>耳部</span>
               </div>
             </div>
-          </div>
 
-          <div class="control-buttons" style="margin-top: 30px;">
-            <button><i class="material-icons">play_arrow</i>开始校准</button>
-            <button><i class="material-icons">camera</i>一键拍摄</button>
-          </div>
-        </div>
-
-        <!-- 校准对齐 -->
-        <div class="content-card" id="calibrateContent" style="display:none;">
-          <div class="content-header">
-            <button class="back-btn" id="backToCapture"><i class="material-icons">arrow_back</i></button>
-            <h2>校准对齐</h2>
-          </div>
-
-          <h3>辅助线设置:</h3>
-          <div class="tab-nav">
-            <div class="tab-nav-item active">正视图</div>
-            <div class="tab-nav-item">九宫格</div>
-            <div class="tab-nav-item">三庭五眼</div>
-          </div>
-
-          <div class="camera-preview">
-            <!-- 模拟实时预览 -->
-            <img src="https://i.pravatar.cc/400?img=4" alt="Live Preview" />
-            <div class="overlay-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
-          </div>
-
-          <h3>升降控制:</h3>
-          <div class="control-buttons">
-            <button><i class="material-icons">arrow_upward</i>上升</button>
-            <button><i class="material-icons">pause</i>暂停</button>
-            <button><i class="material-icons">arrow_downward</i>下降</button>
-          </div>
-
-          <h3 style="margin-top: 30px;">其他:</h3>
-          <div class="control-buttons">
-            <button class="danger"><i class="material-icons">flash_on</i>重置曝光灯</button>
-            <button><i class="material-icons">camera_enhance</i>恢复曝光度</button>
-            <button><i class="material-icons">save</i>保存曝光度</button>
-          </div>
-        </div>
-
-        <!-- 对比查看 -->
-        <div class="content-card" id="compareContent" style="display:none;">
-          <div class="content-header">
-            <h2>对比查看</h2>
-            <div class="action-buttons">
-              <button><i class="material-icons">add</i>添加术后档案</button>
+            <h3 style="margin-top: 30px;">拍摄预览:</h3>
+            <div class="image-gallery">
+              <div class="image-gallery-item">
+                <img src="https://i.pravatar.cc/150?img=1" alt="Placeholder Image">
+              </div>
+              <div class="image-gallery-item">
+                <img src="https://i.pravatar.cc/150?img=2" alt="Placeholder Image">
+              </div>
+              <div class="image-gallery-item">
+                <img src="https://i.pravatar.cc/150?img=3" alt="Placeholder Image">
+              </div>
+              <div class="image-gallery-item">
+                <div style="background:#E0E0E0; width:100%; height:100%; display:flex; align-items:center; justify-content:center;">
+                  <i class="material-icons" style="font-size:3rem; color:#B0B3B8;">camera_alt</i>
+                </div>
+              </div>
+              <div class="image-gallery-item">
+                <div style="background:#E0E0E0; width:100%; height:100%; display:flex; align-items:center; justify-content:center;">
+                  <i class="material-icons" style="font-size:3rem; color:#B0B3B8;">camera_alt</i>
+                </div>
+              </div>
             </div>
-          </div>
 
-          <div class="comparison-area">
-            <div class="comparison-pane">
-              <h3>术前档案</h3>
-              <img src="https://i.pravatar.cc/300?img=5" alt="Before Image" />
-              <p>拍摄日期: 2023-04-26</p>
-              <p>部位: 面部</p>
-            </div>
-            <div class="comparison-pane">
-              <h3>术后档案</h3>
-              <img src="https://i.pravatar.cc/300?img=6" alt="After Image" />
-              <p>拍摄日期: 2024-01-10</p>
-              <p>部位: 面部</p>
-            </div>
-          </div>
-          <div style="text-align: center; margin-top: 20px;">
-            <button class="action-buttons" style="background:#4CAF50; color:#fff;"><i class="material-icons">difference</i>查看对比报告</button>
-          </div>
-        </div>
-
-        <!-- 数据统计 -->
-        <div class="content-card" id="statsContent" style="display:none;">
-          <div class="content-header">
-            <h2>数据统计</h2>
-          </div>
-          <div class="stats-grid">
-            <div class="stat-card">
-              <h3>总客户数</h3>
-              <p>250</p>
-            </div>
-            <div class="stat-card">
-              <h3>今日拍照量</h3>
-              <p>15</p>
-            </div>
-            <div class="stat-card">
-              <h3>本月新增档案</h3>
-              <p>42</p>
-            </div>
-            <div class="stat-card">
-              <h3>热门项目</h3>
-              <p>面部提升 (60%)</p>
-            </div>
-          </div>
-          <p style="margin-top: 30px; text-align: center; color: #888;">图表和更详细的数据将在此处展示。</p>
-        </div>
-
-        <!-- 系统设置 -->
-        <div class="content-card" id="settingsContent" style="display:none;">
-          <div class="content-header">
-            <h2>系统设置</h2>
-          </div>
-
-          <div class="settings-group">
-            <h3>设备连接</h3>
-            <div class="setting-item">
-              <label for="deviceStatus">设备状态:</label>
-              <span>已连接</span>
-            </div>
-            <div class="setting-item">
-              <label for="autoConnect">自动连接设备:</label>
-              <input type="checkbox" id="autoConnect" checked>
+            <div class="control-buttons" style="margin-top: 30px;">
+              <button><i class="material-icons">play_arrow</i>开始校准</button>
+              <button><i class="material-icons">camera</i>一键拍摄</button>
             </div>
           </div>
 
-          <div class="settings-group">
-            <h3>账户与权限</h3>
-            <div class="setting-item">
-              <label for="currentRole">当前角色:</label>
-              <span>管理员</span>
+          <!-- 校准对齐 -->
+          <div class="content-card" id="calibrateContent" style="display:none;">
+            <div class="content-header">
+              <button class="back-btn" id="backToCapture"><i class="material-icons">arrow_back</i></button>
+              <h2>校准对齐</h2>
             </div>
-            <div class="setting-item">
-              <label for="manageUsers">管理用户:</label>
-              <button style="background:#fff; color:#2196F3; border:1px solid #2196F3;">前往管理</button>
+
+            <h3>辅助线设置:</h3>
+            <div class="tab-nav">
+              <div class="tab-nav-item active">正视图</div>
+              <div class="tab-nav-item">九宫格</div>
+              <div class="tab-nav-item">三庭五眼</div>
+            </div>
+
+            <div class="camera-preview">
+              <!-- 模拟实时预览 -->
+              <img src="https://i.pravatar.cc/400?img=4" alt="Live Preview" />
+              <div class="overlay-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+            </div>
+
+            <h3>升降控制:</h3>
+            <div class="control-buttons">
+              <button><i class="material-icons">arrow_upward</i>上升</button>
+              <button><i class="material-icons">pause</i>暂停</button>
+              <button><i class="material-icons">arrow_downward</i>下降</button>
+            </div>
+
+            <h3 style="margin-top: 30px;">其他:</h3>
+            <div class="control-buttons">
+              <button class="danger"><i class="material-icons">flash_on</i>重置曝光灯</button>
+              <button><i class="material-icons">camera_enhance</i>恢复曝光度</button>
+              <button><i class="material-icons">save</i>保存曝光度</button>
             </div>
           </div>
 
-          <div class="settings-group">
-            <h3>其他设置</h3>
-            <div class="setting-item">
-              <label for="language">语言:</label>
-              <span>简体中文</span>
-            </div>
-            <div class="setting-item">
-              <label for="appVersion">版本:</label>
-              <span>V1.2.0</span>
-            </div>
-            <div class="setting-item">
-              <label for="storage">储存空间:</label>
-              <div class="storage-bar">
-                <div class="storage-bar-inner" style="width: 60%;"></div>
-                <span class="storage-text">60GB / 100GB</span>
+          <!-- 对比查看 -->
+          <div class="content-card" id="compareContent" style="display:none;">
+            <div class="content-header">
+              <h2>对比查看</h2>
+              <div class="action-buttons">
+                <button><i class="material-icons">add</i>添加术后档案</button>
               </div>
             </div>
-            <div class="setting-item">
-              <label>联系售后:</label>
-              <div class="contact-card">
-                <div>电话：<a href="tel:400-123-4567">400-123-4567</a></div>
-                <div>微信：<span style="color:#2196F3;">med_support</span></div>
-                <div>邮箱：<a href="mailto:support@med.com">support@med.com</a></div>
+
+            <div class="comparison-area">
+              <div class="comparison-pane">
+                <h3>术前档案</h3>
+                <img src="https://i.pravatar.cc/300?img=5" alt="Before Image" />
+                <p>拍摄日期: 2023-04-26</p>
+                <p>部位: 面部</p>
               </div>
+              <div class="comparison-pane">
+                <h3>术后档案</h3>
+                <img src="https://i.pravatar.cc/300?img=6" alt="After Image" />
+                <p>拍摄日期: 2024-01-10</p>
+                <p>部位: 面部</p>
+              </div>
+            </div>
+            <div style="text-align: center; margin-top: 20px;">
+              <button class="action-buttons" style="background:#4CAF50; color:#fff;"><i class="material-icons">difference</i>查看对比报告</button>
             </div>
           </div>
-          <div class="control-buttons" style="justify-content: flex-end;">
-            <button style="background:#607D8B; color:#fff;"><i class="material-icons">save</i>保存设置</button>
+
+          <!-- 数据统计 -->
+          <div class="content-card" id="statsContent" style="display:none;">
+            <div class="content-header">
+              <h2>数据统计</h2>
+            </div>
+            <div class="stats-grid">
+              <div class="stat-card">
+                <h3>总客户数</h3>
+                <p>250</p>
+              </div>
+              <div class="stat-card">
+                <h3>今日拍照量</h3>
+                <p>15</p>
+              </div>
+              <div class="stat-card">
+                <h3>本月新增档案</h3>
+                <p>42</p>
+              </div>
+              <div class="stat-card">
+                <h3>热门项目</h3>
+                <p>面部提升 (60%)</p>
+              </div>
+            </div>
+            <p style="margin-top: 30px; text-align: center; color: #888;">图表和更详细的数据将在此处展示。</p>
+          </div>
+
+          <!-- 系统设置 -->
+          <div class="content-card" id="settingsContent" style="display:none;">
+            <div class="content-header">
+              <h2>系统设置</h2>
+            </div>
+
+            <div class="settings-group">
+              <h3>设备连接</h3>
+              <div class="setting-item">
+                <label for="deviceStatus">设备状态:</label>
+                <span>已连接</span>
+              </div>
+              <div class="setting-item">
+                <label for="autoConnect">自动连接设备:</label>
+                <input type="checkbox" id="autoConnect" checked>
+              </div>
+            </div>
+
+            <div class="settings-group">
+              <h3>账户与权限</h3>
+              <div class="setting-item">
+                <label for="currentRole">当前角色:</label>
+                <span>管理员</span>
+              </div>
+              <div class="setting-item">
+                <label for="manageUsers">管理用户:</label>
+                <button style="background:#fff; color:#2196F3; border:1px solid #2196F3;">前往管理</button>
+              </div>
+            </div>
+
+            <div class="settings-group">
+              <h3>其他设置</h3>
+              <div class="setting-item">
+                <label for="language">语言:</label>
+                <span>简体中文</span>
+              </div>
+              <div class="setting-item">
+                <label for="appVersion">版本:</label>
+                <span>V1.2.0</span>
+              </div>
+              <div class="setting-item">
+                <label for="storage">储存空间:</label>
+                <div class="storage-bar">
+                  <div class="storage-bar-inner" style="width: 60%;"></div>
+                  <span class="storage-text">60GB / 100GB</span>
+                </div>
+              </div>
+              <div class="setting-item">
+                <label>联系售后:</label>
+                <div class="contact-card">
+                  <div>电话：<a href="tel:400-123-4567">400-123-4567</a></div>
+                  <div>微信：<span style="color:#2196F3;">med_support</span></div>
+                  <div>邮箱：<a href="mailto:support@med.com">support@med.com</a></div>
+                </div>
+              </div>
+            </div>
+            <div class="control-buttons" style="justify-content: flex-end;">
+              <button style="background:#607D8B; color:#fff;"><i class="material-icons">save</i>保存设置</button>
+            </div>
           </div>
         </div>
       </div>
